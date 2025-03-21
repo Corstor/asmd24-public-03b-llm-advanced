@@ -8,7 +8,8 @@ import java.util.Objects;
 
 public class Resources {
     public static String loadAllContent(String name) throws Exception {
-        return new String(Files.readAllBytes(getPath(name)));
+        String resourcePath = "src/main/resources/" + name;
+        return new String(Files.readAllBytes(Paths.get(resourcePath)));
     }
     
     private static java.nio.file.Path getPath(String name) throws Exception {

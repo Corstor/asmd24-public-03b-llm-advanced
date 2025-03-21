@@ -1,0 +1,28 @@
+@startuml use-case-diagram
+left to right direction
+
+actor Member
+actor Trainer
+
+usecase "FR-1.1: Workout Program Creation (Trainer)" as WorkoutProgramCreation
+usecase "FR-2.1: Workout Program Assignment (Trainer)" as WorkoutProgramAssignment
+usecase "FR-3.1: Workout Logging (Member)" as WorkoutLogging
+usecase "FR-4.1: Progress Tracking (Member & Trainer)" as ProgressTracking
+usecase "FR-5.1: Workout Scheduling (Member)" as WorkoutScheduling
+usecase "FR-6.1: User Authentication and Authorization" as UserAuthentication
+usecase "FR-7.1: Workout Template/Routine Saving (Member)" as WorkoutTemplateSaving
+usecase "FR-8.1: Communication (Trainer & Member)" as Communication
+
+Trainer -- WorkoutProgramCreation
+Trainer -- WorkoutProgramAssignment
+Trainer -- ProgressTracking
+Trainer -- Communication
+Trainer -- UserAuthentication
+
+Member -- WorkoutLogging
+Member -- ProgressTracking
+Member -- WorkoutScheduling
+Member -- UserAuthentication
+Member -- WorkoutTemplateSaving
+Member -- Communication
+@enduml

@@ -1,0 +1,103 @@
+@startuml class-diagram
+
+' Style settings
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor White
+    BorderColor Black
+}
+skinparam association {
+    FontSize 10
+    FontColor Black
+    LineColor Black
+}
+
+' Classes
+class User {
+    - username: String
+    - passwordHash: String
+    + authenticate(password): boolean
+}
+
+class Member extends User {
+    - memberId: String
+    + logWorkout(workout): void
+    + viewProgress(): void
+    + scheduleWorkout(workout): void
+    + saveWorkoutTemplate(template): void
+}
+
+class Trainer extends User {
+    - trainerId: String
+    + createWorkoutProgram(program): void
+    + assignWorkoutProgram(member, program): void
+    + modifyWorkoutProgram(program): void
+    + trackMemberAdherence(member): void
+    + setMemberGoals(member, goals): void
+}
+
+class WorkoutProgram {
+    - programId: String
+    - name: String
+    - description: String
+    + addExercise(exercise): void
+    + removeExercise(exercise): void
+}
+
+class Exercise {
+    - exerciseId: String
+    - name: String
+    - sets: int
+    - repetitions: int
+    - weight: double
+    - restTime: int
+    - instructions: String
+    - category: String
+}
+
+class WorkoutLog {
+    - logId: String
+    - date: Date
+    - notes: String
+    + addExerciseLog(exerciseLog): void
+}
+
+class ExerciseLog {
+    - exerciseId: String
+    - actualSets: int
+    - actualReps: int
+    - actualWeight: double
+    - skipped: boolean
+    - skipReason: String
+}
+
+class WorkoutSchedule {
+    - scheduleId: String
+    - date: Date
+    - time: Time
+    + reschedule(): void
+    + cancel(): void
+}
+
+class Message {
+    - messageId: String
+    - senderId: String
+    - receiverId: String
+    - content: String
+    - timestamp: Timestamp
+}
+
+' Associations
+Member --* WorkoutLog : logs
+WorkoutLog --* ExerciseLog : contains
+Exercise --* ExerciseLog : tracked in
+
+Trainer "1" -- "*" Member : assigns >
+Trainer "1" -- "*" WorkoutProgram : creates >
+WorkoutProgram --* Exercise : consists of >
+Member --* WorkoutSchedule : schedules >
+User -- "*" Message : sends/receives >
+
+WorkoutProgram "1" -- "1..*" Exercise : includes
+
+@enduml
